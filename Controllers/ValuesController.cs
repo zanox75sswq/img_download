@@ -78,7 +78,7 @@ namespace img_download.Controllers
                                         product_list.RemoveAt(product_list.Count - 1);
                                     }
                                 }
-                                if (product != null)
+                                if (product != null && product.revise!=1)
                                 {
                                     // 在这里对取出的数据进行处理
                                     // 可以在这里调用您的方法进行处理，例如 await ProcessDataAsync(data)
@@ -98,7 +98,7 @@ namespace img_download.Controllers
                                       }
                                     }
                                     //整理（如果首图下载出错，就从相册重选,新列表中也必须要有1张图）
-                                    if (new_img_list.Count>1)
+                                    if (new_img_list.Count>0)
                                     {
                                         //首图
                                         product.img = new_img_list[0];
@@ -122,7 +122,7 @@ namespace img_download.Controllers
 
                             }
 
-                            await Task.Delay(1); // 等待一小段时间，避免线程饥饿
+                            await Task.Delay(2); // 等待一小段时间，避免线程饥饿
                         }
                     }));
                 }
@@ -191,6 +191,7 @@ namespace img_download.Controllers
             else
             {
                 i_img_url = img;
+              
             }
             string Md5Key = MD5Helper.GetMd5Hash(i_img_url);
             //下载首图
@@ -264,6 +265,66 @@ namespace img_download.Controllers
             byte[] base64Bytes = Encoding.ASCII.GetBytes(base64String);
 
             return Convert.FromBase64String(Encoding.ASCII.GetString(base64Bytes, 0, base64Length));
+        }
+        /// <summary>
+        /// 实时更新图片
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="m_id"></param>
+        /// <returns></returns>
+        [HttpGet("Realtime")]
+
+        public async Task<string> Get_img(string id, string m_id)
+        {
+            //下载图片
+            using (var db = new Models.b2bContext())
+            {
+                try
+                {
+                    var m_id_s = await db.product_tabs.Where(b => b.m_id == m_id && b.revise == 1).ToListAsync();
+                    if (m_id_s.Count > 0)
+                    {
+                        //已经有图片源
+                        var u_product = await db.product_tabs.Where(b => b.m_id == m_id && b.id == int.Parse(id)).FirstAsync();
+                        u_product.img = m_id_s[0].img;
+                        u_product.img_item = m_id_s[0].img_item;
+                        u_product.revise = 1;
+                        await db.SaveChangesAsync();
+                    }
+                    else
+                    {
+                        //没有图片源
+                        var u_product = await db.product_tabs.Where(b => b.m_id == m_id && b.id == int.Parse(id)).FirstAsync();
+
+                        //相册下载
+                        List<string> new_img_list = new List<string>();
+                        foreach (var img in JsonConvert.DeserializeObject<List<string>>(u_product.img_item))
+                        {
+                            string new_img = await dl_up(img);
+                            if (new_img != "no")
+                            {
+                                new_img_list.Add(new_img);//新的相册
+                            }
+                        }
+                        //整理（如果首图下载出错，就从相册重选,新列表中也必须要有1张图）
+                        if (new_img_list.Count > 1)
+                        {
+                            //首图
+                            u_product.img = new_img_list[0];
+                            //相册
+                            u_product.img_item = JsonConvert.SerializeObject(new_img_list);
+                            //修改状态
+                            u_product.revise = 1;
+
+                            var k = await update_product(u_product);
+                        }
+                    }
+                }catch(Exception ex)
+                {
+
+                }
+            }
+            return "ok";
         }
     }
 }

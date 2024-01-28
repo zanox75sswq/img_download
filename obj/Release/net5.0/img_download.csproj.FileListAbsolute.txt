@@ -53,8 +53,3 @@ C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\refint\img_downloa
 C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\img_download.pdb
 C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\img_download.genruntimeconfig.cache
 C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\ref\img_download.dll
-C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\staticwebassets\img_download.StaticWebAssets.Pack.cache
-C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\staticwebassets\msbuild.img_download.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\staticwebassets\msbuild.build.img_download.props
-C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\staticwebassets\msbuild.buildMultiTargeting.img_download.props
-C:\Users\lhh\Documents\GitHub\img_download\obj\Release\net5.0\staticwebassets\msbuild.buildTransitive.img_download.props
