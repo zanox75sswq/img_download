@@ -184,17 +184,18 @@ namespace img_download.Controllers
         {
             string i_img_url;
 
-            if (!img.Contains("https://"))
+            if (!img.Contains("https://") )
             {
                 i_img_url = Encoding.UTF8.GetString(ForceDecodeBase64String(img.Replace("/imgs/", "").Replace(".jpg", "")));
             }
             else
             {
+
                 i_img_url = img;
               
             }
             string Md5Key = MD5Helper.GetMd5Hash(i_img_url);
-            //下载首图
+            //下载图
             var imgbytes = await Picture(i_img_url);
 
             if (imgbytes != null)
