@@ -275,7 +275,7 @@ namespace img_download.Controllers
         /// <returns></returns>
         [HttpGet("Realtime")]
 
-        public async Task<string> Get_img(string id, string m_id)
+        public async Task<string> Get_Realtime_img(string id, string m_id)
         {
             //下载图片
             using (var db = new Models.b2bContext())
@@ -324,6 +324,33 @@ namespace img_download.Controllers
                 {
 
                 }
+            }
+            return "ok";
+        }
+
+        [HttpGet("updata_img")]
+        public async Task<string> updata_img()
+        {
+            //下载图片
+            using (var db = new Models.b2bContext())
+            {
+                db.Database.SetCommandTimeout(200000);
+                var product_list = db.product_tabs.FromSqlRaw(string.Format("SELECT * FROM product_tab WHERE revise = 1 AND img LIKE '/imgs%'"));
+                foreach (var item in product_list)
+                {
+                    try
+                    {
+                         item.img = JsonConvert.DeserializeObject<List<string>>(item.img_item)[0];
+                       
+                     
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+
+                }
+                db.SaveChanges();
             }
             return "ok";
         }

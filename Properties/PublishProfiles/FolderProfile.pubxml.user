@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\lhh\Documents\GitHub\img_download\bin\Release\net5.0\publish\</_PublishTargetUrl>
-    <History>True|2024-01-29T19:29:34.1401760Z;True|2024-01-28T15:20:05.5803057+08:00;True|2024-01-28T15:19:05.3466671+08:00;True|2024-01-28T14:14:44.6236999+08:00;True|2024-01-28T14:13:27.7435270+08:00;</History>
+    <History>True|2024-01-30T11:47:30.3711850Z;False|2024-01-30T19:47:08.8004839+08:00;True|2024-01-30T19:29:08.0832209+08:00;True|2024-01-30T03:29:34.1401760+08:00;True|2024-01-28T15:20:05.5803057+08:00;True|2024-01-28T15:19:05.3466671+08:00;True|2024-01-28T14:14:44.6236999+08:00;True|2024-01-28T14:13:27.7435270+08:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>
